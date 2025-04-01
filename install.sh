@@ -6,29 +6,25 @@ set -e
 BIN_DIR="$HOME/bin"
 INSTALL_PATH="$BIN_DIR/kcs"
 
+# Define gradient colors (purple to green)
+C1='\033[38;5;93m'  # Light purple
+C2='\033[38;5;92m'  # Purple
+C3='\033[38;5;91m'  # Dark purple
+C4='\033[38;5;90m'  # Purple-magenta
+C5='\033[38;5;54m'  # Dark magenta
+C6='\033[38;5;55m'  # Magenta-blue
+C7='\033[38;5;56m'  # Blue-green
+C8='\033[38;5;49m'  # Light cyan
+C9='\033[38;5;48m'  # Green
+C10='\033[38;5;47m' # Bright green
+NC='\033[0m'       # No Color
+
 # Function for purple-green gradient ASCII art
 print_banner() {
-    # Define gradient colors (purple to green)
-    C1='\033[38;5;93m'  # Light purple
-    C2='\033[38;5;92m'  # Purple
-    C3='\033[38;5;91m'  # Dark purple
-    C4='\033[38;5;90m'  # Purple-magenta
-    C5='\033[38;5;54m'  # Dark magenta
-    C6='\033[38;5;55m'  # Magenta-blue
-    C7='\033[38;5;56m'  # Blue-green
-    C8='\033[38;5;49m'  # Light cyan
-    C9='\033[38;5;48m'  # Green
-    C10='\033[38;5;47m' # Bright green
-    NC='\033[0m'       # No Color
-
     echo -e "${C1}╔╗ ╔═╗  ╦╔═╦ ╦╔╗ ╔═╗  ╔═╗╦ ╦╦╔╦╗╔═╗╦ ╦${NC}"
     echo -e "${C2}╠╩╗║ ║  ╠╩╗║ ║╠╩╗║╣   ╚═╗║║║║ ║ ║  ╠═╣${NC}"
     echo -e "${C3}╚═╝╚═╝  ╩ ╩╚═╝╚═╝╚═╝  ╚═╝╚╩╝╩ ╩ ╚═╝╩ ╩${NC}"
     echo -e "${C4}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${C5}╔═╗╦ ╦╔═╗╔═╗╔═╗╔╦╗╔═╗  ╔═╗╔═╗${NC}"
-    echo -e "${C6}╠═╣║║║║╣ ╚═╗║ ║║║║║╣   ╠═╝║ ║${NC}"
-    echo -e "${C7}╩ ╩╚╩╝╚═╝╚═╝╚═╝╩ ╩╚═╝  ╩  ╚═╝${NC}"
-    echo -e "${C8}★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★${NC}"
     echo -e "${C9}Terminal Kubernetes context switcher${NC}"
     echo -e "${C10}With retro-wave UI design${NC}"
     echo ""
@@ -44,16 +40,28 @@ install_kcs() {
     # Create directory for binary
     mkdir -p "$BIN_DIR"
 
+    # Create a temporary directory for building
+    TMP_DIR=$(mktemp -d)
+    cd "$TMP_DIR"
+
     # Download the code directly
     echo -e "${C6}Downloading code...${NC}"
     curl -L -s https://raw.githubusercontent.com/sky0ps/kube-switch/main/main.go -o "main.go"
 
+    # Initialize Go module and get dependencies
+    echo -e "${C7}Setting up Go modules...${NC}"
+    go mod init github.com/sky0ps/kube-switch
+    go get github.com/gdamore/tcell/v2
+    go get github.com/rivo/tview
+    go get k8s.io/client-go@latest
+
     # Build the binary
-    echo -e "${C7}Building binary...${NC}"
+    echo -e "${C8}Building binary...${NC}"
     go build -o "$INSTALL_PATH" main.go
 
     # Clean up
-    rm main.go
+    cd - > /dev/null
+    rm -rf "$TMP_DIR"
 
     # Check if the directory is in PATH
     if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
@@ -68,7 +76,7 @@ install_kcs() {
     # Final message
     echo -e "\n${C10}Kube Switch (kcs) has been installed successfully!${NC}"
     echo -e "${C9}Run 'kcs' to start the application.${NC}"
-    echo -e "${C8}To uninstall, run 'kcs --uninstall' or this script with --uninstall${NC}"
+    echo -e "${C8}To uninstall, run this script with --uninstall${NC}"
 }
 
 # Function to uninstall kcs
