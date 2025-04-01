@@ -51,12 +51,18 @@ install_kcs() {
     # Initialize Go module and get dependencies
     echo -e "${C7}Setting up Go modules...${NC}"
     go mod init github.com/sky0ps/kube-switch
+    
+    # Add explicit dependencies
     go get github.com/gdamore/tcell/v2
     go get github.com/rivo/tview
     go get k8s.io/client-go@latest
+    
+    # Run go mod tidy to resolve all dependencies
+    echo -e "${C8}Resolving dependencies...${NC}"
+    go mod tidy
 
     # Build the binary
-    echo -e "${C8}Building binary...${NC}"
+    echo -e "${C9}Building binary...${NC}"
     go build -o "$INSTALL_PATH" main.go
 
     # Clean up
