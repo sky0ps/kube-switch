@@ -1,21 +1,21 @@
 # 🌌 Kube Switch (kcs)
 
 ```
-╔╗ ╔═╗  ╦╔═╦ ╦╔╗ ╔═╗  ╔═╗╦ ╦╦╔╦╗╔═╗╦ ╦
-╠╩╗║ ║  ╠╩╗║ ║╠╩╗║╣   ╚═╗║║║║ ║ ║  ╠═╣
-╚═╝╚═╝  ╩ ╩╚═╝╚═╝╚═╝  ╚═╝╚╩╝╩ ╩ ╚═╝╩ ╩
+ ╦╔═╦ ╦╔╗ ╔═╗  ╔═╗╦ ╦╦╔╦╗╔═╗╦ ╦
+ ╠╩╗║ ║╠╩╗║╣   ╚═╗║║║║ ║ ║  ╠═╣
+ ╩ ╩╚═╝╚═╝╚═╝  ╚═╝╚╩╝╩ ╩ ╚═╝╩ ╩
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 A retro-themed terminal UI for switching between Kubernetes contexts and namespaces, with a gorgeous retrowave color scheme.
 
-## ✨ Features
+##  Features
 
-- 📋 **List and switch** between Kubernetes contexts with a stylish terminal UI
-- 🔄 **Switch namespaces** within contexts
-- 🎨 **Color-coded** contexts based on environment (production: purple, staging: magenta, development: blue)
-- 🚨 **Safety confirmations** for production environments
-- 💻 **Retro-wave inspired** color theme with purple and blue gradients
+-  **List and switch** between Kubernetes contexts with a stylish terminal UI
+-  **Switch namespaces** within contexts
+-  **Color-coded** contexts based on environment (production: purple, staging: magenta, development: blue)
+-  **Safety confirmations** for production environments
+-  **Retro-wave inspired** color theme with purple and blue gradients
 
 ## 🚀 Installation
 
