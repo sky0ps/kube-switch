@@ -2,49 +2,103 @@
 
 set -e
 
-# Colors
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-
-# ASCII Art Banner
-echo -e "${PURPLE}"
-echo "  _  __     _            _____         _ _       _     "
-echo " | |/ /    | |          / ____|       (_) |     | |    "
-echo " | ' /_   _| |__   ___ | (_____      ___| |_ ___| |__  "
-echo " |  <| | | | '_ \ / _ \ \___ \ \ /\ / / | __/ __| '_ \ "
-echo " | . \ |_| | |_) |  __/ ____) \ V  V /| | || (__| | | |"
-echo " |_|\_\__,_|_.__/ \___||_____/ \_/\_/ |_|\__\___|_| |_|"
-echo -e "${NC}"
-
-echo -e "${BLUE}Installing Kube Switch (kcs)...${NC}"
-echo ""
-
-# Create directory for binary
+# Define installation locations
 BIN_DIR="$HOME/bin"
-mkdir -p "$BIN_DIR"
+INSTALL_PATH="$BIN_DIR/kcs"
 
-# Download the code directly
-echo -e "${BLUE}Downloading code...${NC}"
-curl -L -s https://raw.githubusercontent.com/sky0ps/kube-switch/main/main.go -o "main.go"
+# Function for purple-green gradient ASCII art
+print_banner() {
+    # Define gradient colors (purple to green)
+    C1='\033[38;5;93m'  # Light purple
+    C2='\033[38;5;92m'  # Purple
+    C3='\033[38;5;91m'  # Dark purple
+    C4='\033[38;5;90m'  # Purple-magenta
+    C5='\033[38;5;54m'  # Dark magenta
+    C6='\033[38;5;55m'  # Magenta-blue
+    C7='\033[38;5;56m'  # Blue-green
+    C8='\033[38;5;49m'  # Light cyan
+    C9='\033[38;5;48m'  # Green
+    C10='\033[38;5;47m' # Bright green
+    NC='\033[0m'       # No Color
 
-# Build the binary
-echo -e "${BLUE}Building binary...${NC}"
-go build -o "$BIN_DIR/kcs" main.go
+    echo -e "${C1}╔╗ ╔═╗  ╦╔═╦ ╦╔╗ ╔═╗  ╔═╗╦ ╦╦╔╦╗╔═╗╦ ╦${NC}"
+    echo -e "${C2}╠╩╗║ ║  ╠╩╗║ ║╠╩╗║╣   ╚═╗║║║║ ║ ║  ╠═╣${NC}"
+    echo -e "${C3}╚═╝╚═╝  ╩ ╩╚═╝╚═╝╚═╝  ╚═╝╚╩╝╩ ╩ ╚═╝╩ ╩${NC}"
+    echo -e "${C4}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${C5}╔═╗╦ ╦╔═╗╔═╗╔═╗╔╦╗╔═╗  ╔═╗╔═╗${NC}"
+    echo -e "${C6}╠═╣║║║║╣ ╚═╗║ ║║║║║╣   ╠═╝║ ║${NC}"
+    echo -e "${C7}╩ ╩╚╩╝╚═╝╚═╝╚═╝╩ ╩╚═╝  ╩  ╚═╝${NC}"
+    echo -e "${C8}★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★${NC}"
+    echo -e "${C9}Terminal Kubernetes context switcher${NC}"
+    echo -e "${C10}With retro-wave UI design${NC}"
+    echo ""
+}
 
-# Clean up
-rm main.go
+# Function to install kcs
+install_kcs() {
+    print_banner
 
-# Check if the directory is in PATH
-if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
-  echo -e "${YELLOW}Adding $BIN_DIR to PATH...${NC}"
-  echo "export PATH=\"\$PATH:$BIN_DIR\"" >> "$HOME/.bashrc"
-  echo -e "${YELLOW}Please run 'source ~/.bashrc' to update your PATH${NC}"
+    echo -e "${C5}Installing Kube Switch (kcs)...${NC}"
+    echo ""
+
+    # Create directory for binary
+    mkdir -p "$BIN_DIR"
+
+    # Download the code directly
+    echo -e "${C6}Downloading code...${NC}"
+    curl -L -s https://raw.githubusercontent.com/sky0ps/kube-switch/main/main.go -o "main.go"
+
+    # Build the binary
+    echo -e "${C7}Building binary...${NC}"
+    go build -o "$INSTALL_PATH" main.go
+
+    # Clean up
+    rm main.go
+
+    # Check if the directory is in PATH
+    if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
+        echo -e "${C8}Adding $BIN_DIR to PATH...${NC}"
+        echo "export PATH=\"\$PATH:$BIN_DIR\"" >> "$HOME/.bashrc"
+        echo -e "${C9}Please run 'source ~/.bashrc' to update your PATH${NC}"
+    fi
+
+    # Make the binary executable
+    chmod +x "$INSTALL_PATH"
+
+    # Final message
+    echo -e "\n${C10}Kube Switch (kcs) has been installed successfully!${NC}"
+    echo -e "${C9}Run 'kcs' to start the application.${NC}"
+    echo -e "${C8}To uninstall, run 'kcs --uninstall' or this script with --uninstall${NC}"
+}
+
+# Function to uninstall kcs
+uninstall_kcs() {
+    print_banner
+    
+    echo -e "${C5}Uninstalling Kube Switch (kcs)...${NC}"
+    
+    # Check if binary exists
+    if [ -f "$INSTALL_PATH" ]; then
+        # Remove binary
+        rm -f "$INSTALL_PATH"
+        echo -e "${C7}Removed binary from $INSTALL_PATH${NC}"
+        
+        # Check if PATH was modified
+        if grep -q "export PATH=\"\$PATH:$BIN_DIR\"" "$HOME/.bashrc"; then
+            echo -e "${C8}NOTE: The PATH entry in ~/.bashrc was not removed.${NC}"
+            echo -e "${C9}If you don't have other programs in $BIN_DIR, you may want to remove this line:${NC}"
+            echo -e "${C10}    export PATH=\"\$PATH:$BIN_DIR\"${NC}"
+        fi
+        
+        echo -e "\n${C10}Kube Switch (kcs) has been uninstalled successfully!${NC}"
+    else
+        echo -e "${C5}Kube Switch (kcs) does not appear to be installed.${NC}"
+    fi
+}
+
+# Process command line arguments
+if [ "$1" == "--uninstall" ]; then
+    uninstall_kcs
+else
+    install_kcs
 fi
-
-# Final message
-echo -e "\n${GREEN}Kube Switch (kcs) has been installed successfully!${NC}"
-echo -e "${BLUE}Run 'kcs' to start the application.${NC}"

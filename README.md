@@ -1,38 +1,28 @@
 # 🌌 Kube Switch (kcs)
 
 ```
-██╗  ██╗██╗   ██╗██████╗ ███████╗    ███████╗██╗    ██╗██╗████████╗ ██████╗██╗  ██╗
-██║ ██╔╝██║   ██║██╔══██╗██╔════╝    ██╔════╝██║    ██║██║╚══██╔══╝██╔════╝██║  ██║
-█████╔╝ ██║   ██║██████╔╝█████╗      ███████╗██║ █╗ ██║██║   ██║   ██║     ███████║
-██╔═██╗ ██║   ██║██╔══██╗██╔══╝      ╚════██║██║███╗██║██║   ██║   ██║     ██╔══██║
-██║  ██╗╚██████╔╝██████╔╝███████╗    ███████║╚███╔███╔╝██║   ██║   ╚██████╗██║  ██║
-╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝    ╚══════╝ ╚══╝╚══╝ ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝
+╔╗ ╔═╗  ╦╔═╦ ╦╔╗ ╔═╗  ╔═╗╦ ╦╦╔╦╗╔═╗╦ ╦
+╠╩╗║ ║  ╠╩╗║ ║╠╩╗║╣   ╚═╗║║║║ ║ ║  ╠═╣
+╚═╝╚═╝  ╩ ╩╚═╝╚═╝╚═╝  ╚═╝╚╩╝╩ ╩ ╚═╝╩ ╩
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-A retro-themed terminal UI for switching between Kubernetes contexts and namespaces.
+A retro-themed terminal UI for switching between Kubernetes contexts and namespaces, with a gorgeous retrowave color scheme.
 
 ## ✨ Features
 
 - 📋 **List and switch** between Kubernetes contexts with a stylish terminal UI
 - 🔄 **Switch namespaces** within contexts
-- 🎨 **Color-coded** contexts based on environment (production, staging, development)
+- 🎨 **Color-coded** contexts based on environment (production: purple, staging: magenta, development: blue)
 - 🚨 **Safety confirmations** for production environments
-- 💻 **Retro-wave inspired** color theme
+- 💻 **Retro-wave inspired** color theme with purple and blue gradients
 
 ## 🚀 Installation
 
-### Option 1: Download binary
+### Option 1: One-line installer
 
 ```bash
-# Create directory for binary
-mkdir -p ~/bin
-
-# Download and install
 curl -L https://raw.githubusercontent.com/sky0ps/kube-switch/main/install.sh | bash
-
-# Add to PATH if needed
-echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
 ```
 
 ### Option 2: Build from source
@@ -50,6 +40,18 @@ mkdir -p ~/bin
 cp kcs ~/bin/
 echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
+```
+
+## 🧹 Uninstallation
+
+To uninstall Kube Switch, you can run either:
+
+```bash
+# Option 1: Using the installer script with --uninstall flag
+curl -L https://raw.githubusercontent.com/sky0ps/kube-switch/main/install.sh | bash -s -- --uninstall
+
+# Option 2: Direct removal
+rm ~/bin/kcs
 ```
 
 ## 🎮 Usage
