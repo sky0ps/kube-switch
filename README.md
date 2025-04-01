@@ -42,7 +42,7 @@ echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-## 🧹 Uninstallation
+## 🧹 Uninstall
 
 To uninstall Kube Switch, you can run either:
 
